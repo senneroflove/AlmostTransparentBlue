@@ -10,10 +10,15 @@
         uniform vec2  resolution;
         uniform float spectrum;
 
+        // float rand(vec2 co){
+        //   return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+        // }
+        //becouse Necessity cannot be denied
 
         void mainImage( out vec4 fragColor, in vec2 fragCoord )
         {
-          float speed =  0.18;
+          float timevalue = 9.82;
+          float speed =  0.16;
 	        float time =  time * speed;
    	    	vec2 uv = fragCoord.xy / resolution.xy;
           
@@ -22,8 +27,7 @@
         	float c = 1.12;
         	float itn =  0.0124;
         	for (int n = 0; n < MAX_ITER; n++) {
-
-        		float t = time * speed ;
+        		float t = timevalue * 0.2 + time * speed ;
         		i = p + vec2(cos(t - i.x) + sin(t + i.y), sin(t - i.y) + cos(t + i.x));
         		c += 1.0 / length(vec2(p.x / (sin(i.x + t) / itn + spectrum), p.y / (cos(i.y + t) / itn)));
         	}
@@ -31,7 +35,7 @@
         	c /= float(MAX_ITER);
         	c = tc - pow(c, tc);
 
-        	float bc = 0.096;
+        	float bc = 0.098;
         	vec3 colour = vec3(bc, bc, bc+pow(abs(c), 5.2));
 
         	fragColor = vec4(colour, 1.0);
